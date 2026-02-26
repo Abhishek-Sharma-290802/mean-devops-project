@@ -1,0 +1,56 @@
+version: "3"
+
+services:
+
+  mongodb:
+
+    image: mongo
+
+    container_name: mongodb
+
+    ports:
+
+      - "27017:27017"
+
+    volumes:
+
+      - mongo-data:/data/db
+
+
+  backend:
+
+    image: abhishell2002/mean-backend
+
+    container_name: backend
+
+    ports:
+
+      - "5000:5000"
+
+    environment:
+
+      - MONGO_URI=mongodb://mongodb:27017/test
+
+    depends_on:
+
+      - mongodb
+
+
+  frontend:
+
+    image: abhishell2002/mean-frontend
+
+    container_name: frontend
+
+    ports:
+
+      - "80:80"
+
+    depends_on:
+
+      - backend
+
+
+volumes:
+
+  mongo-data:
